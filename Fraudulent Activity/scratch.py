@@ -5,6 +5,7 @@ import re
 import sys
 from statistics import median
 import time
+import math
 
 fptr = open("input01.txt")
 
@@ -21,13 +22,20 @@ if(d >= n):
 #values to left of right of median value(s)
 #initialize
 buffer = expenditure[:d]
-buffer_tagged = list(zip(buffer, range(len(buffer))))
-med = []
-left = []
-right = []
+buffer_tagged = list(enumerate(buffer))
+buffer_tagged_srt = sorted(buffer_tagged, key=lambda x : x[1])
 
-if(N % 2 == 0): #if n is even:
-    med = []
+#split the list of previous expenditures in to three parts. 
+#the mid part will have either one or two for odd and even d, resp.
+#first calculate the mid parts first index and its length {1,2}
+mid_0 = math.ceil(d/2) - 1
+mid_len = 2 if (d%2 == 0) else 1
+
+mid = buffer_tagged_srt[mid_0: mid_0+mid_len]
+left = buffer_tagged_srt[:mid_0]
+right = buffer_tagged_srt[mid_0+mid_len:]
+
+
 
 
 ################Brute Force###########
